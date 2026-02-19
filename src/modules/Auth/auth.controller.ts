@@ -29,7 +29,33 @@ const CreateUserAuth=async (req:Request,res:Response)=>{
     
 }
 
+const LoginAuth=async (req:Request,res:Response)=>{
+    try{
+        
+     const result=await AuthService.loginUserAuth(req.body)
+
+     sendResponse(res,{
+        statusCode:201,
+        success:true,
+        message:"User logged in successfully",
+        data:result
+
+     })
+
+     }catch(error){
+        console.error(error)
+        sendResponse(res,{
+        statusCode:400,
+        success:false,
+        message:"User login failed",
+        data:error
+     })
+     }
+    
+}
+
 export const AuthController = {
     // Add controller methods here
-    CreateUserAuth
+    CreateUserAuth,
+    LoginAuth
     };
