@@ -1,4 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
+import sendResponse from "../../utils/sendResponse";
 
 export const CatchAsync=(fn:RequestHandler)=>{
     return async (req:Request,res:Response,next:NextFunction)=>{
@@ -6,11 +7,10 @@ export const CatchAsync=(fn:RequestHandler)=>{
             await fn(req,res,next)
         } catch (error:any) {
             console.log(error);
-            res.status(500).json({
+            sendResponse(res,{
+                statusCode:500,
                 success:false,
-                message:"something went wrong",
-                error:error.message
-
+                message:error,
             })
             
         }

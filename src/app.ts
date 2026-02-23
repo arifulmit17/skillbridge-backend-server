@@ -13,9 +13,9 @@ app.use(cors());
 
 // application routes
 app.use('/api/v1/auth', AuthRoutes);
-app.use('/api/v1/', reviewRoutes);
-app.use('/api/v1/', CategoryRoutes);
-app.use('/api/v1/', BookingRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
+app.use('/api/v1/categories', CategoryRoutes);
+app.use('/api/v1/bookings', BookingRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello from Apollo Gears World!');
