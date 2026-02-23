@@ -28,6 +28,8 @@ model User {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     tutorProfile TutorProfile?
+    booking Booking[]
+    review Reviews[]
     @@index([status])
     @@map("users")
 }
@@ -35,10 +37,61 @@ model User {
 model TutorProfile{
    id String @id @default(uuid())
    subject String 
+   feeperHour Int
    isFeatured Boolean
    isBooked Boolean
 
    userid String @unique
    User User @relation(fields: [userid],references: [id])
+
+   booking Booking[]
+   review Reviews[]
    
+}
+
+model Category{
+  id String @id @default(uuid())
+  title String
+
+  booking Booking[]
+  
+  createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Booking {
+ id String @id @default(uuid())
+ subject String 
+
+ startTime DateTime
+ endTime DateTime
+
+ TotalCost Decimal @db.Decimal(10, 2)
+ 
+ tutorid String
+ tutor TutorProfile @relation(fields: [tutorid],references: [id])
+
+ studentid String?
+ user User? @relation(fields: [studentid],references: [id])
+
+ categoryid String
+ category Category @relation(fields: [categoryid],references: [id])
+
+ createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+}
+
+model Reviews {
+  id String @id @default(uuid())
+
+  content String
+  rating Int
+
+  tutorid String?
+ tutor TutorProfile? @relation(fields: [tutorid],references: [id])
+
+ studentid String?
+ user User? @relation(fields: [studentid],references: [id])
+
 }
